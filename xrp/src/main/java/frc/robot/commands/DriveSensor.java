@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 
-public class ArmSeq extends Command {
+public class DriveSensor extends Command {
     Arm arm;
     Drivetrain drive;
-    double angle;
+    double dist;
+    final double FINISHED_COUNT = 20;
     boolean done;
     double count;
-    final double FINISHED_COUNT = 100;
   
   /**
    * Creates a new ArmSeq. This command will drive your your robot for a desired distance at
@@ -24,13 +24,10 @@ public class ArmSeq extends Command {
    * @param inches The number of inches the robot will drive
    * @param drive The drivetrain subsystem on which this command will run
    */
-    public ArmSeq(Arm arm, Drivetrain drive, double angle){
-    this(arm, angle);
-    this.drive = drive;
-  }
-  public ArmSeq(Arm arm, double angle) {
+    public DriveSensor(Arm arm, Drivetrain drive, double dist){
     this.arm = arm;
-    this.angle = angle;
+    this.drive = drive;
+    this.dist = dist;
   }
 
   // Called when the command is initially scheduled.
@@ -38,17 +35,13 @@ public class ArmSeq extends Command {
   public void initialize() {
     done = false;
     count = 0;
-    arm.setAngle(angle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(arm.atAngle()){
-        count++;
-    }
-    if(count > FINISHED_COUNT){
-       done = true;
+    if(dist > drive.getDistance()){
+        arm.setAngle(80.0);
     }
   }
 
@@ -61,6 +54,6 @@ public class ArmSeq extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return done;
+    return false;
   }
 }

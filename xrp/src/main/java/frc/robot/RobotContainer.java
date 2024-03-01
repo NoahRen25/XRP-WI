@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArmSeq;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.commands.DriveSensor;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -63,20 +65,24 @@ public class RobotContainer {
         .onFalse(new PrintCommand("USER Button Released"));
 
     JoystickButton joystickAButton = new JoystickButton(m_controller, 1);
-    joystickAButton
-        .onTrue(new InstantCommand(() -> m_arm.setAngle(45.0), m_arm))
-        .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
+    // joystickAButton
+    //     .onTrue(new InstantCommand(() -> m_arm.setAngle(45.0), m_arm))
+    //     .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
  
     // JoystickButton joystickBButton = new JoystickButton(m_controller, 2);
     // joystickBButton
     //     .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
     //     .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
  JoystickButton joystickBButton = new JoystickButton(m_controller, 2);
-    joystickBButton
-        .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
-        .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
+    // joystickBButton
+    //     .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
+    //     .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm)); 
+        joystickAButton.onTrue(new ArmSeq(m_arm, 50.0));
+        joystickBButton.onTrue(new ArmSeq(m_arm, 5.0));
+  JoystickButton joystickCButton = new JoystickButton(m_controller, 3);
+  joystickCButton.whileTrue(new DriveSensor(m_arm, m_drivetrain, 10));
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
+    m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain, m_arm));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
     SmartDashboard.putData(m_chooser);
   }
