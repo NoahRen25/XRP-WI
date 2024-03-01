@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
   private final XRPServo m_armServo;
+  double desiredAngle;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -27,6 +28,18 @@ public class Arm extends SubsystemBase {
    * @param angleDeg Desired arm angle in degrees
    */
   public void setAngle(double angleDeg) {
+    desiredAngle = angleDeg;
     m_armServo.setAngle(angleDeg);
+  }
+  public double getAngle(){
+   return m_armServo.getAngle();
+  }
+  public boolean atAngle(){
+    if(m_armServo.getAngle() == desiredAngle){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }
