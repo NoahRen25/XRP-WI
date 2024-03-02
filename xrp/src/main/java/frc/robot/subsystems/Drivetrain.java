@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.xrp.XRPGyro;
 import edu.wpi.first.wpilibj.xrp.XRPMotor;
 import edu.wpi.first.wpilibj.xrp.XRPRangefinder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
   private static final double kGearRatio =
@@ -22,8 +23,8 @@ public class Drivetrain extends SubsystemBase {
   private final XRPRangefinder range;
   // The XRP has the left and right motors set to
   // channels 0 and 1 respectively
-  private final XRPMotor m_leftMotor = new XRPMotor(0);
-  private final XRPMotor m_rightMotor = new XRPMotor(1);
+  private final XRPMotor m_leftMotor = new XRPMotor(Constants.CAN.LEFT_MOTOR);
+  private final XRPMotor m_rightMotor = new XRPMotor(Constants.CAN.RIGHT_MOTOR);
 
   // The XRP has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
